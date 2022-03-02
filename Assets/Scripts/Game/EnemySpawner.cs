@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour {
 
   public static List<Enemy> enemies;
+  public static List<Transform> enemyTransforms;
   public static Dictionary<long, GameObject> enemyPrefabsById;
   public static Dictionary<long, Queue<Enemy>> enemyObjectPools;
 
@@ -19,6 +20,7 @@ public class EnemySpawner : MonoBehaviour {
     enemyPrefabsById = new Dictionary<long, GameObject>();
     enemyObjectPools = new Dictionary<long, Queue<Enemy>>();
     enemies = new List<Enemy>();
+    enemyTransforms = new List<Transform>();
 
     EnemySpawnData[] enemySpawnDatas = Resources.LoadAll<EnemySpawnData>("Enemies");
     Debug.Log(enemySpawnDatas[0].name);
@@ -42,11 +44,12 @@ public class EnemySpawner : MonoBehaviour {
       enemy = enemyQueue.Dequeue();
       enemy.gameObject.SetActive(true);
     } else {
-      GameObject newEnemyObject = Instantiate(enemyPrefabsById[enemyId], Vector3.zero, Quaternion.identity);
+      GameObject newEnemyObject = Instantiate(enemyPrefabsById[enemyId], GameManager.nodePositions[0], Quaternion.identity);
       enemy = newEnemyObject.GetComponent<Enemy>();
       enemy.id = enemyId;
     }
     enemy.Init();
+    enemyTransforms.Add(enemy.transform);
     enemies.Add(enemy);
     return enemy;
   }
@@ -55,6 +58,7 @@ public class EnemySpawner : MonoBehaviour {
     enemyObjectPools[enemyToRemove.id].Enqueue(enemyToRemove);
     enemyToRemove.gameObject.SetActive(false);
     enemies.Remove(enemyToRemove);
+    enemyTransforms.Remove(enemyToRemove.transform);
   }
 
 }

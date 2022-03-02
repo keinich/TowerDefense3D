@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+  public int nodeIndex;
   public float maxHealth;
   public float health;
   public float speed;
@@ -11,5 +12,7 @@ public class Enemy : MonoBehaviour {
 
   public void Init() {
     health = maxHealth;
+    transform.position = GameManager.nodePositions[0];
+    nodeIndex = 0;
   }
 }
