@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
     if (Input.GetKey(KeyCode.Mouse0)) {
       xRot -= playerMouseInput.y * sensitivity;
       transform.Rotate(0f, playerMouseInput.x * sensitivity, 0f);
-      playerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
+      //playerCamera.transform.localRotation = Quaternion.Euler(xRot, 0f, 0f);
     }
     zoom += Input.GetAxis("Mouse ScrollWheel");
     Vector3 localForward = playerCamera.transform.worldToLocalMatrix.MultiplyVector(playerCamera.transform.forward);
